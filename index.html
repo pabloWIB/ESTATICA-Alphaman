@@ -228,7 +228,7 @@
                     </p>
 
                     <div class="prod_img_wrapper" id="form">
-                        <img src="https://static.statthroat.tech/pages/cfeaf861-a8ad-4c54-84bb-1a3880d767d7/img/product.png"
+                        <img src="IMG/8.png"
                             style="max-width:300px" class="prod_img">
                         <center>
                             <span class="price_old">
@@ -243,16 +243,8 @@
                     <center style="margin-bottom: 70px;">
                         <h3>
                             <div class="timer">
-                                <span class="hour">
-                                    <span class="num hour0" id="hours">0</span>
-                                </span>
-                                :
-                                <span class="minute">
-                                    <span class="num min0" id="min">3</span>
-                                </span>
-                                :
                                 <span class="second">
-                                    <span class="num sec0" id="sec">4</span>
+                                    <span class="num sec0" id="countdown">06:30</span>
                                 </span>
                             </div>
                             <!-- <span>Vendido: 1845 <br>
@@ -260,7 +252,7 @@
                         </h3>
 
                     </center>
-                    <form class="order_form al-form x_order_form orderForm  " method="POST">
+                    <form class="order_form al-form x_order_form orderForm  " >
                         <a type="submit" class="form_btn sub2" href="https://nplink.net/cww7w9zh">
                             JETZT BESTELLEN
                         </a>
@@ -270,44 +262,32 @@
         </section>
     </main>
     <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function () {
-            date_for_sale = new Date().getTime();
-            date_for_sale = date_for_sale + 60 * 390 * 1000;
-            countdown();
 
-        });
-        function countdown() {
-            var days = 24 * 60 * 60,
-                hours = 60 * 60,
-                minutes = 60;
-            seconds = 1;
-            var left = Math.floor((date_for_sale - (new Date().getTime())) / 1000);
-            if (left < 0) {
-                left = 0;
-            }
-            h = Math.floor(left / hours);
-            if (h < 10) {
-                h = '0' + h;
-            }
-            left -= h * hours;
-            m = Math.floor(left / minutes);
-            if (m < 10) {
-                m = '0' + m;
-            }
-            left -= m * minutes;
+        let timeLeft = 390; // 6 minutes 30 seconds in seconds
 
-            s = Math.floor(left / seconds);
-            if (s < 10) {
-                s = '0' + s;
-            }
-            document.getElementById('hours').innerHTML = h;
-            document.getElementById('min').innerHTML = m;
-            document.getElementById('sec').innerHTML = s;
-
-            if (h > 0 || m > 0 || s > 0 || d > 0) {
-                setTimeout(countdown, 1000);
-            }
+        function startCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            
+            const timer = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                
+                countdownElement.textContent = 
+                    `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    timeLeft = 390; // Reset to 6 minutes 30 seconds
+                    startCountdown(); // Restart the countdown
+                } else {
+                    timeLeft--;
+                }
+            }, 1000);
         }
+
+        startCountdown();
+
+     
     </script>
     <script>
         const anchors = document.querySelectorAll('a[href*="#"]')
