@@ -111,6 +111,7 @@
             font-weight: bold;
         }
     </style>
+    <link rel="stylesheet" href="CSS/styles.css"/>
 </head>
 
 <body>
@@ -227,43 +228,29 @@
                         Soweit ich weiß, ist die Studie abgeschlossen und das Produkt bereits online verfügbar. Derzeit beschränkt der Hersteller den Markt und verkauft sein Produkt nur über die offizielle Website:
                     </p>
 
-                    <div class="prod_img_wrapper" id="form">
-                        <img src="IMG/8.png"
-                            style="max-width:300px" class="prod_img">
-                        <center>
-                            <span class="price_old">
-                                <span class="oldPriceAndLabelForLandingInfoApi"> 49,99€</span>
-                            </span><br>
-                            <span class="price_new">
-                                <span class="priceAndLabelForLandingInfoApi"> 39,99€</span>
-                            </span>
-                        </center>
-
+                    <div class="find_last_img" id="form">
+                        <div>
+                            <img src="IMG/Member_XXL_pro-removebg-preview.png">
+                        </div>
+                        <div>
+                            <p class="article__text"> 49,99€</p>
+                            <p class="article__text"> 39,99€</p>
+                        </div>
+                        <div>
+                            <h3 id="countdown">06:30</h3>
+                        </div>
+                        <div>
+                            <a type="submit" class="form_btn sub2" href="https://nplink.net/cww7w9zh">JETZT BESTELLEN</a>
+                        </div>
                     </div>
-                    <center style="margin-bottom: 70px;">
-                        <h3>
-                            <div class="timer">
-                                <span class="second">
-                                    <span class="num sec0" id="countdown">06:30</span>
-                                </span>
-                            </div>
-                            <!-- <span>Vendido: 1845 <br>
-                                Rechazado: 114</span> -->
-                        </h3>
-
-                    </center>
-                    <form class="order_form al-form x_order_form orderForm  " >
-                        <a type="submit" class="form_btn sub2" href="https://nplink.net/cww7w9zh">
-                            JETZT BESTELLEN
-                        </a>
-                    </form>
                 </div>
             </div>
         </section>
     </main>
     <script type="text/javascript">
 
-        let timeLeft = 390; // 6 minutes 30 seconds in seconds
+let timeLeft = 390; // 6 minutes 30 seconds in seconds
+        let millisecondsLeft = 0; // To store additional milliseconds
 
         function startCountdown() {
             const countdownElement = document.getElementById('countdown');
@@ -272,17 +259,23 @@
                 const minutes = Math.floor(timeLeft / 60);
                 const seconds = timeLeft % 60;
                 
+                // Calculate milliseconds
+                const milliseconds = Math.floor(millisecondsLeft / 10); // Convert to centiseconds
+                millisecondsLeft += 100; // Increment milliseconds
+
                 countdownElement.textContent = 
-                    `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-                
-                if (timeLeft <= 0) {
+                    `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(milliseconds).padStart(2, '0')}`;
+
+                if (timeLeft <= 0 && millisecondsLeft >= 1000) {
                     clearInterval(timer);
                     timeLeft = 390; // Reset to 6 minutes 30 seconds
+                    millisecondsLeft = 0; // Reset milliseconds
                     startCountdown(); // Restart the countdown
-                } else {
+                } else if (millisecondsLeft >= 1000) {
                     timeLeft--;
+                    millisecondsLeft = 0; // Reset milliseconds after one second
                 }
-            }, 1000);
+            }, 100); // Update every 100 ms for centiseconds
         }
 
         startCountdown();
